@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="col-sm-12 text-end">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add Item
+            </button>
+        </div>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Progress</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"> </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Car</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="carId" class="form-label">Id</label>
+                        <input type="number" class="form-control" id="carId">
+                    </div>
+                    <div class="mb-3">
+                        <label for="carType" class="form-label">Type</label>
+                        <input type="text" class="form-control" id="carType">
+                    </div>
+                    <div class="mb-3">
+                        <label for="carBrand" class="form-label">Brand</label>
+                        <input type="text" class="form-control" id="carBrand">
+                    </div>
+                    <div class="mb-3">
+                        <label for="carModel" class="form-label">Model</label>
+                        <input type="text" class="form-control" id="carModel">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addCar()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"></script>
+
+<script>
+    let cars = [
+        {
+            id: 1,
+            type: "SUV",
+            brand: "Fiat",
+            model: "Egea Cross"
+        },
+        {
+            id: 2,
+            type: "Hatchback",
+            brand: "BMW",
+            model: "116"
+        },
+        {
+            id: 3,
+            type: "Sedan",
+            brand: "Mercedes",
+            model: "Benz"
+        }
+    ]
+
+    $(function () {
+        loadTableFromArray()
+    })
+
+    function loadTableFromArray() {
+        $('#tableBody').empty();
+        cars.forEach(car => {
+            $('#tableBody').append(
+                '<tr><th scope="row">' + car.id + '</th><td>' + car.type + '</td><td>' + car.brand + '</td><td>' + car.model + '</td><td><button type="button" class="btn btn-danger" onclick="deleteCar(' + car.id + ')">Sil</button></td></tr>'
+            )
+        })
+    }
+
+    function addCar() {
+        let newCar = {
+            id: parseInt($("#carId").val()),
+            type: $("#carType").val(),
+            brand: $("#carBrand").val(),
+            model: $("#carModel").val()
+        }
+        cars.push(newCar)
+        loadTableFromArray()
+    }
+
+    function deleteCar(id) {
+        let carFromId = cars.find(x => (x.id === id))
+        let carIndex = cars.indexOf(carFromId)
+        if (carIndex > -1) {
+            cars.splice(carIndex, 1)
+            loadTableFromArray()
+        }
+    }
+
+</script>
+
+</html>
